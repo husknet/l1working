@@ -1,5 +1,8 @@
 // app.js
 
+const connectButton = document.getElementById('connectButton');
+const accountInfo = document.getElementById('accountInfo');
+
 // Initialize Web3Modal
 const providerOptions = {
   walletconnect: {
@@ -10,7 +13,7 @@ const providerOptions = {
   },
 };
 
-const web3Modal = new Web3Modal({
+const web3Modal = new window.Web3Modal.default({
   cacheProvider: false,
   providerOptions,
 });
@@ -18,12 +21,10 @@ const web3Modal = new Web3Modal({
 let provider;
 let signer;
 
-const connectButton = document.getElementById('connectButton');
-const accountInfo = document.getElementById('accountInfo');
-
 async function connectWallet() {
   try {
-    provider = new ethers.providers.Web3Provider(await web3Modal.connect());
+    const instance = await web3Modal.connect();
+    provider = new ethers.providers.Web3Provider(instance);
     signer = provider.getSigner();
     const account = await signer.getAddress();
     accountInfo.innerText = `Connected account: ${account}`;
