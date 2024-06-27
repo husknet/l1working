@@ -1,16 +1,25 @@
 // app.js
 
-const connectButton = document.getElementById('connectButton');
-const accountInfo = document.getElementById('accountInfo');
-
 // Initialize Web3Modal
-const web3Modal = new Web3Modal.default({
-  cacheProvider: false, // optional
-  providerOptions: {} // required
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider.default,
+    options: {
+      infuraId: "c05e035e823a4769b62ae15c1cbe2f02",
+    },
+  },
+};
+
+const web3Modal = new Web3Modal({
+  cacheProvider: false,
+  providerOptions,
 });
 
 let provider;
 let signer;
+
+const connectButton = document.getElementById('connectButton');
+const accountInfo = document.getElementById('accountInfo');
 
 async function connectWallet() {
   try {
@@ -33,4 +42,3 @@ async function connectWallet() {
 }
 
 connectButton.addEventListener('click', connectWallet);
-
